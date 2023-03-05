@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block head_title %}{% endblock %}</title>
+    <link href="{% static 'css/output.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="border-b flex items-center justify-between py-6 px-20">
+      <img src="{% static 'images/logo.png' %}" class="" />
+      <ul class="flex space-x-10  text-lg">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'jobs' %}">Jobs</a></li>
+        <li><a href="{% url 'companies' %}">Companies</a></li>
+      </ul>
+    </nav>
+    {% block content %}{% endblock %}
+  </body>
+  <footer class="bg-[#aaff00] pt-5">
+    <div class="grid grid-cols-4 px-20 gap-5">
+      <div class="col-span-1">
+        <img src="{% static 'images/logo.png' %}" class="" />
+        <p class="mt-3">
+          Corporate Ethiopia is an online job listing website tailor made for Ethiopians. 
+          It was founded in 2023.
+        </p>
+      </div>
+      <div class="col-span-1">
+      </div>
+      <div class="col-span-2">
+        <form>
+          <p class="text-xl font-bold">Get in touch</p>
+          <div class="grid grid-cols-2 gap-2 mt-2">
+            <div class="">
+              <div>First Name</div>
+              <input type="" class="w-full p-2 mt-1" />
+            </div>
+            <div class="">
+              <div>Last Name</div>
+              <input type="" class="w-full p-2 mt-1" />
+            </div>
+          </div>
+          <div class="mt-2">
+            <div>Email</div>
+            <input type="email" class="w-full p-2 mt-1" />
+          </div>
+          <div class="mt-2">
+            <div>Your Message</div>
+            <textarea class="w-full h-[100px] p-2 mt-1 resize-none"></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="border-b border-b-black mt-5"></div>
+    <div class="py-5 px-20 flex items-center justify-between">
+      <div>© 2023 Developed by Corporate Ethiopia. All Rights Reserved.</div>
+      <div class="flex space-x-4">
+        <img src="{% static 'icons/instagram_black.svg' %}" class="h-8 w-8" />
+        <img src="{% static 'icons/telegram_black.svg' %}" class="h-8 w-8" />
+        <img src="{% static 'icons/facebook_black.svg' %}" class="h-8 w-8" />
+      </div>
+    </div>
+  </footer>
+  <script src="{% static 'js/script.js' %}"></script>
+</html>
