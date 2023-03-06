@@ -13,25 +13,23 @@
     <nav class="border-b flex items-center justify-between py-6 px-20">
       <img src="{% static 'images/logo.png' %}" class="" />
       <ul class="flex space-x-10  text-lg">
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'jobs' %}">Jobs</a></li>
-        <li><a href="{% url 'companies' %}">Companies</a></li>
+        <li class="{% if isHomeActive %} border-b-2  border-[#aaff00] pb-1 {% endif %}"><a href="{% url 'home' %}">Home</a></li>
+        <li class="{% if isJobsActive %} border-b-2 border-[#aaff00] pb-1 {% endif %}"><a href="{% url 'jobs' %}">Jobs</a></li>
+        <li class="{% if isCompaniesActive %} border-b-2 border-[#aaff00] pb-1 {% endif %}"><a href="{% url 'companies' %}">Companies</a></li>
       </ul>
     </nav>
     {% block content %}{% endblock %}
   </body>
   <footer class="bg-[#aaff00] pt-5">
-    <div class="grid grid-cols-4 px-20 gap-5">
-      <div class="col-span-1">
+    <div class="grid grid-cols-5 px-20 gap-5">
+      <div class="col-span-2">
         <img src="{% static 'images/logo.png' %}" class="" />
         <p class="mt-3">
           Corporate Ethiopia is an online job listing website tailor made for Ethiopians. 
           It was founded in 2023.
         </p>
       </div>
-      <div class="col-span-1">
-      </div>
-      <div class="col-span-2">
+      <div class="col-span-3">
         <form>
           <p class="text-xl font-bold">Get in touch</p>
           <div class="grid grid-cols-2 gap-2 mt-2">
@@ -52,6 +50,7 @@
             <div>Your Message</div>
             <textarea class="w-full h-[100px] p-2 mt-1 resize-none"></textarea>
           </div>
+          <button class="rounded-lg px-3 py-2 bg-black text-white">Send Message</button>
         </form>
       </div>
     </div>
