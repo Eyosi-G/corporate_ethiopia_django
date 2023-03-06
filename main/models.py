@@ -15,12 +15,15 @@ class Sector(models.Model):
     
 class Company(models.Model):
     name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
+    address = models.CharField(
+        max_length=200
+    )
     website = models.CharField(
         max_length=100, 
         blank=True,
         null=True
     )
-    slug = models.SlugField(unique=True)
     email = models.EmailField(
         blank=True, 
         null=True
@@ -32,15 +35,8 @@ class Company(models.Model):
         verbose_name='Short Description'
     )
     logo = models.ImageField(
-        upload_to='uploads/',
-        null=True, 
-        blank=True
-    )
-    header_image = models.ImageField(
-        upload_to='uploads/', 
-        null=True,
-        blank=True,
-        verbose_name='Header Image'
+        upload_to='images/',
+        default="default.png"
     )
 
     def __str__(self):
@@ -79,6 +75,38 @@ class Job(models.Model):
         ('Remote', 'Remote'),
         ('Hybrid', 'Hybrid'),
     ]
+
+    regions = [
+        ('Addis-Ababa', 'Addis Ababa'),
+        ('Dre-Dawa', 'Dre Dawa'),
+        ('Afar', 'Afar'),
+        ('Amhara', 'Amhara'),
+        ('Tigray', 'Tigray'),
+        ('Benishangul-Gumuz', 'Benishangul Gumuz'),
+        ('Gambela', 'Gambela'),
+        ('Harari', 'Harari'),
+        ('Oromia', 'Oromia'),
+        ('Sidama', 'Sidama'),
+        ('Somali', 'Somali'),
+        ('SNNPR','SNNPR'),
+        ('SWEP','SWEP')
+    ]
+
+    sectors = [
+        ('Bank', 'Bank'),
+        ('NGO', 'NGO'),
+        ('Education', 'Education'),
+        ('Hospotality', 'Hospotality'),
+        ('IT', 'IT'),
+        ('Engineering', 'Engineering'),
+        ('Transportation', 'Transportation'),
+        ('Legal-Service', 'Legal Service'),
+        ('Health', 'Health'),
+        ('Manufacturing', 'Manufacturing'),
+        ('Creative-Art', 'Creative Art'),
+        ('Skill-Work','Skill Work'),
+    ]
+
     title = models.CharField(max_length=100)
     description = RichTextField()
     created_at = models.DateField(auto_now_add=True)
@@ -97,6 +125,15 @@ class Job(models.Model):
         choices=workModes,
         max_length=20,
         verbose_name='Work Mode'
+    )    
+    sector  = models.CharField(
+        max_length=20,
+        choices=sectors
+    )
+
+    region = models.CharField(
+        max_length=20,
+        choices=regions
     )
     quantity_required = models.IntegerField(
         verbose_name='Quanity Required',

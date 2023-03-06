@@ -1,49 +1,64 @@
-{% extends 'common/base.html' %}
-{% block head_title %} Companies {% endblock %}
+{% extends 'common/base.html' %} {% block head_title %} Companies {% endblock %}
+{% load static %}
 {% block content %}
-<div class="p-20 bg-[#e8ffae]">
+<div class="p-20 bg-[#e8ffae] flex space-x-2 items-end">
+  <img src="{% static 'images/corporate.png' %}" class="h-32" />
+  <div class="pl-5">
     <h1 class="font-bold text-3xl">Find a workplace that works for you</h1>
     <p>
-        Discover what an employer is really like before you make your next move.
+      Discover what an employer is really like before you make your next move.
     </p>
+  </div>
 </div>
 <div class="px-20 py-5">
-    <div class="grid grid-cols-2 gap-3">
-    {% include 'components/company.html' %}
-    {% include 'components/company.html' %}
-    {% include 'components/company.html' %}
-    {% include 'components/company.html' %}
-    </div>
-    <div class="flex mt-5 justify-center ">
-        <div class="grow"></div>
-        <div class="grow flex justify-between items-center">
-            <div class="flex space-x-2">
-                <button class="p-2 outline-none rounded-md  border-2 border-[#aaff00]">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#aaff00]">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-                    </svg>                      
-                </button>
-                <div class="flex items-center space-x-2  bg-[#aaff00] px-5 py-2 rounded-md">
-                    <div>Next page</div>
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                    >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                    />
-                    </svg>
-                </div>
-            </div>
-        
-            <div>Page 1 of 5</div>
+  <div class="grid grid-cols-2 gap-3">
+    {% for company in companies %}
+    {% include 'components/company.html' %} 
+    {% endfor %}
+  </div>
+  <div class="flex mt-5 justify-center">
+    <div class="grow"></div>
+    <div class="grow flex justify-between items-center">
+      <div class="flex space-x-2">
+        <button class="p-2 outline-none rounded-md border-2 border-[#aaff00]">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 text-[#aaff00]"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+            />
+          </svg>
+        </button>
+        <div
+          class="flex items-center space-x-2 bg-[#aaff00] px-5 py-2 rounded-md"
+        >
+          <div>Next page</div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+            />
+          </svg>
         </div>
+      </div>
+
+      <div>Page {{currentPage}} of {{numOfPages}}</div>
     </div>
+  </div>
 </div>
 {% endblock %}

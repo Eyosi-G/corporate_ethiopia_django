@@ -4,6 +4,11 @@ from . import models
 
 # class CompanyAdmin(admin.ModelAdmin):
 
+class CompanyAdmin(admin.ModelAdmin):
+    exclude = ['slug']
 
-admin.site.register(models.Company)
-admin.site.register(models.Job)
+class JobAdmin(admin.ModelAdmin):
+    exclude = ['slug']
+
+admin.site.register(models.Company, CompanyAdmin)
+admin.site.register(models.Job, JobAdmin)

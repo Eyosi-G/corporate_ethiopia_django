@@ -1,2 +1,6 @@
 /corporate_ethiopia/.env
 /node_modules
+/main/migrations/
+/main/__pycache__
+/media
+/corporate_ethiopia/__pycache__
