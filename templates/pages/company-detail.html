@@ -2,8 +2,8 @@
 {% block head_title %}{{slug}}{% endblock %}
 {% load static %}
 {% block content %}
-    <div class="px-20 py-5">
-        <div class="grid grid-cols-12 gap-2 p-2 rounded-lg">
+    <div class="px-5 md:px-20 py-5">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-2 p-2 rounded-lg">
             <div class="col-span-2 p-2 h-32">
               <img
                 class="w-full h-full object-cover"
@@ -61,10 +61,10 @@
               </div>
             </div>
         </div>
-        <div class="grid grid-cols-12 mt-10 gap-4">
-            <div class="col-span-9 ">
+        <div class="grid grid-cols-1 flex-col-reverse md:grid-cols-12 mt-10 gap-4">
+            <div class="col-span-full md:col-span-9 order-2 md:order-1">
               <h1 class="text-xl">Open Positions</h1>
-              <div class="grid grid-cols-3 gap-2 mt-2">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-2">
                 {% for job in jobs %}
                 {% include 'components/job.html' %}
                 {% endfor %}
@@ -76,7 +76,7 @@
               {% endif %}
               {% include 'common/pagination.html' with page_name="jobs"%}
             </div>
-            <div class="col-span-3">
+            <div class="md:col-span-3 col-span-full order-1 md:order-2">
               <h1 class="text-xl">Company Overview</h1>
               <div class="mt-2 space-y-2 bg-[#e8ffae]  rounded-lg p-4">
                 <div class="flex space-x-2 items-center">

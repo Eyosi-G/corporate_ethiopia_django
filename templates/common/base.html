@@ -10,18 +10,25 @@
     <link href="{% static 'css/output.css' %}" rel="stylesheet" />
   </head>
   <body>
-    <nav class="border-b flex items-center justify-between py-6 px-20">
-      <img src="{% static 'images/logo.png' %}" class="" />
-      <ul class="flex space-x-10  text-lg">
-        <li class="{% if isHomeActive %} border-b-2  border-[#aaff00] pb-1 {% endif %}"><a href="{% url 'home' %}">Home</a></li>
-        <li class="{% if isJobsActive %} border-b-2 border-[#aaff00] pb-1 {% endif %}"><a href="{% url 'jobs' %}">Jobs</a></li>
-        <li class="{% if isCompaniesActive %} border-b-2 border-[#aaff00] pb-1 {% endif %}"><a href="{% url 'companies' %}">Companies</a></li>
+    <nav class="border-b flex flex-col md:flex-row md:items-center justify-between py-3 px-5 md:py-6 md:px-20">
+      <div class="flex justify-between">
+        <img  src="{% static 'images/logo.png' %}" class="h-14 md:h-full" />
+        <button id="menu_button" class="md:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+          </svg>          
+        </button>
+      </div>
+      <ul id="menus" class="space-x-10  text-lg flex md:flex-row flex-col items-end">
+        <li class="border-b-2  pb-1 {% if isHomeActive %} border-[#aaff00] {% else %} border-white {% endif %}"><a href="{% url 'home' %}">Home</a></li>
+        <li class="border-b-2  pb-1 {% if isJobsActive %} border-[#aaff00] {% else %} border-white {% endif %}"><a href="{% url 'jobs' %}">Jobs</a></li>
+        <li class="border-b-2  pb-1 {% if isCompaniesActive %} border-[#aaff00] {% else %} border-white  {% endif %}"><a href="{% url 'companies' %}">Companies</a></li>
       </ul>
     </nav>
     {% block content %}{% endblock %}
   </body>
   <footer class="bg-[#aaff00] pt-5">
-    <div class="grid grid-cols-5 px-20 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-5 px-5 md:px-20 gap-5">
       <div class="col-span-2">
         <img src="{% static 'images/logo.png' %}" class="" />
         <p class="mt-3">
@@ -50,14 +57,14 @@
             <div>Your Message</div>
             <textarea class="w-full h-[100px] p-2 mt-1 resize-none"></textarea>
           </div>
-          <button class="rounded-lg px-3 py-2 bg-black text-white">Send Message</button>
+          <button class="mt-2 rounded-lg px-3 py-2 bg-black text-white">Send Message</button>
         </form>
       </div>
     </div>
     <div class="border-b border-b-black mt-5"></div>
-    <div class="py-5 px-20 flex items-center justify-between">
-      <div>© 2023 Developed by Corporate Ethiopia. All Rights Reserved.</div>
-      <div class="flex space-x-4">
+    <div class="py-5 px-5 md:px-20 flex md:flex-row flex-col items-center justify-between">
+      <div class="text-center md:text-start">© 2023 Developed by Corporate Ethiopia. All Rights Reserved.</div>
+      <div class="flex space-x-4 mt-3 md:mt-0">
         <img src="{% static 'icons/instagram_black.svg' %}" class="h-8 w-8" />
         <img src="{% static 'icons/telegram_black.svg' %}" class="h-8 w-8" />
         <img src="{% static 'icons/facebook_black.svg' %}" class="h-8 w-8" />

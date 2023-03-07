@@ -4,10 +4,10 @@ Monitoring And Evaluation Coordinator
 {% endblock %} 
 {% load static %}
 {% block content %}
-<div class="px-20 my-5">
-  <h1 class="text-4xl font-bold">{{job.title}}</h1>
-  <div class="grid grid-cols-12 gap-2 p-2 mt-3 rounded-lg">
-    <div class="col-span-2 p-2 h-32">
+<div class="px-5 md:px-20 my-5">
+  <h1 class="text-2xl text-center md:text-start md:text-4xl font-bold">{{job.title}}</h1>
+  <div class="grid grid-cols-1  md:grid-cols-12 gap-2 p-2 mt-3 rounded-lg">
+    <div class="md:col-span-2 col-span-full p-2 h-32">
       <img
         class="w-full h-full object-cover"
         src="{{job.company.logo.url}}"
@@ -64,18 +64,18 @@ Monitoring And Evaluation Coordinator
       </div>
     </div>
   </div>
-  <div class="grid grid-cols-12 mt-10 gap-4">
-    <div class="col-span-9">
+  <div class="grid grid-cols-1 md:grid-cols-12 mt-10 gap-4">
+    <div class="md:col-span-9 col-span-full">
       <h1 class="text-xl">Job Description</h1>
-      <p class="mt-2 text-sm">
+      <p class="mt-2 ">
         {{job.description | safe}}
       </p>
       <h1 class="text-xl mt-5">How to apply</h1>
-      <p class="mt-2 text-sm">
+      <p class="mt-2 ">
         {{job.how_to_apply}}
       </p>
     </div>
-    <div class="col-span-3">
+    <div class="md:col-span-3 col-span-full">
       <h1 class="text-xl">Job Overview</h1>
       <div class="mt-2 space-y-2 bg-[#e8ffae]  rounded-lg p-4">
         <div class="flex space-x-2 items-center">
@@ -127,7 +127,7 @@ Monitoring And Evaluation Coordinator
   </div>
   <div class="mt-10">
     <h1 class="text-xl">Related Jobs</h1>
-    <div class="mt-3 grid grid-cols-4 gap-2">
+    <div class="mt-3 grid grid-cols-1 md:grid-cols-4 gap-2">
         {% for job in relatedJobs %}
         {% include 'components/job.html' %}
         {% endfor %}

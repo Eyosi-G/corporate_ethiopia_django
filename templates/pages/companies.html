@@ -1,16 +1,17 @@
 {% extends 'common/base.html' %} {% block head_title %} Companies {% endblock %}
-{% load static %} {% block content %}
-<div class="p-20 bg-[#e8ffae] flex space-x-2 items-end">
+{% load static %} 
+{% block content %}
+<div class="px-5 md:px-20 py-20 bg-[#e8ffae] flex flex-col md:flex-row md:space-x-2 items-start  md:items-end">
   <img src="{% static 'images/corporate.png' %}" class="h-32" />
-  <div class="pl-5">
+  <div class="md:pl-5 mt-5 md:mt-0">
     <h1 class="font-bold text-3xl">Find a workplace that works for you</h1>
     <p>
       Discover what an employer is really like before you make your next move.
     </p>
   </div>
 </div>
-<div class="px-20 py-5">
-  <div class="grid grid-cols-2 gap-3">
+<div class="px-5 md:px-20 py-5">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
     {% for company in companies %}
     {% include 'components/company.html' %}
     {% endfor %}

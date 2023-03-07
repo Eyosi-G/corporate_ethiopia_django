@@ -1,13 +1,13 @@
 {% load static %} 
 
-<div class="flex items-center">
+<div class="flex items-center flex-col-reverse md:flex-row">
   <div class="grow">
-    <h1 class="text-4xl capitalize col-span-1 font-bold">
+    <h1 class="text-3xl md:text-4xl capitalize col-span-1 font-bold">
       one step closer to your dream job
     </h1>
-    <h2 class="text-xl text-gray-500">
+    <h2 class="text-lg md:text-xl text-gray-500 mt-2 md:mt-0">
       Explore and discover the right job for you!
     </h2>
   </div>
-  <img class="w-[40%] object-cover" src="{% static 'images/3312004.jpg'%}" />
+  <img class="md:w-[40%] object-cover mb-10 md:mb-0" src="{% static 'images/3312004.jpg'%}" />
 </div>
