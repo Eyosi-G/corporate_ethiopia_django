@@ -1,6 +1,8 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
+from datetime import datetime, timedelta
+
 # Create your models here.
 class Sector(models.Model):
     name = models.CharField(max_length=100)
@@ -29,7 +31,7 @@ class Company(models.Model):
         null=True
     )
     short_description = RichTextField(
-        max_length=400, 
+        max_length=500, 
         null=True, 
         blank=True, 
         verbose_name='Short Description'
@@ -43,7 +45,8 @@ class Company(models.Model):
         return self.name
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+
+        self.slug = slugify(f'{self.name} {str(datetime.now())}') 
         super(Company, self).save(*args, **kwargs)
 
         
@@ -89,12 +92,14 @@ class Job(models.Model):
         ('Sidama', 'Sidama'),
         ('Somali', 'Somali'),
         ('SNNPR','SNNPR'),
-        ('SWEP','SWEP')
+        ('SWEP','SWEP'),
+        ('Unspecified','Unspecified'),
     ]
 
     sectors = [
         ('Bank', 'Bank'),
         ('NGO', 'NGO'),
+        ('Finance', 'Finance'),
         ('Education', 'Education'),
         ('Hospotality', 'Hospotality'),
         ('IT', 'IT'),
@@ -108,6 +113,7 @@ class Job(models.Model):
     ]
 
     title = models.CharField(max_length=100)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     description = RichTextField()
     created_at = models.DateField(auto_now_add=True)
     slug = models.SlugField(unique=True)
@@ -149,6 +155,12 @@ class Job(models.Model):
     def __str__(self):
         return self.title
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        self.slug = slugify(f'{self.title} {str(datetime.now())}') 
         super(Job, self).save(*args, **kwargs)
 
+    def isNew(self):
+        createdAt = datetime(self.created_at.year, self.created_at.month, self.created_at.day)
+        return createdAt > datetime.today() - timedelta(days=5)
+    def hasExpired(self):
+        deadline = datetime(self.deadline.year, self.deadline.month, self.deadline.day)
+        return datetime.today() > deadline

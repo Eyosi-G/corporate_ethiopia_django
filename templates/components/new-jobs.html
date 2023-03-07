@@ -1,3 +1,4 @@
+{% load static %}
 <div class="mt-10">
   <h1 class="text-2xl font-bold">Newest Jobs Listing</h1>
   <div class="flex justify-between items-center">
@@ -5,45 +6,18 @@
       <p>narrow down your applications and let the most appealing</p>
       <p>and matching companies show off</p>
     </div>
-    <button class="bg-black text-white px-4 py-2 rounded-md text-sm">
+    <a href="/jobs" class="bg-black text-white px-4 py-2 rounded-md text-sm">
       View All Listing
-    </button>
+    </a>
   </div>
   <div class="mt-5 grid grid-cols-4 gap-4">
+    {% for job in jobs %}
     {% include 'components/job.html' %} 
-    {% include 'components/job.html' %}
-    {% include 'components/job.html' %}
-    {% include 'components/job.html' %}
+    {% endfor %}
   </div>
-  <div class="flex my-5 justify-center ">
-    <div class="grow"></div>
-    <div class="grow flex justify-between items-center">
-        <div class="flex space-x-2">
-            <a href="#" class="p-2 outline-none rounded-md  border-2 border-[#aaff00]">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#aaff00]">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-                </svg>                      
-              </a>
-            <div class="flex items-center space-x-2  bg-[#aaff00] px-5 py-2 rounded-md">
-                <div>Next page</div>
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-                >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                />
-                </svg>
-            </div>
-        </div>
-    
-        <div>Page 1 of 5</div>
-    </div>
-</div>
+  {% if jobs|length == 0 %}
+  <div class="h-80 flex justify-center">
+    <img class="h-full object-cover" src="{% static 'images/empty.svg'%}" />
+  </div>
+  {% endif %}
 </div>

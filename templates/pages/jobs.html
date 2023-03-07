@@ -1,14 +1,15 @@
 {% extends 'common/base.html' %} 
 {% block head_title %}Jobs{% endblock %} 
+{% load static %}
 {% block content %}
 
 <div class="grid grid-cols-12 gap-2 my-5 px-20">
-  <div class="col-span-3 w-full pr-5">
+  <form method="get" action="{% url 'jobs' %}" class="col-span-3 w-full pr-5">
     <div
       class="flex items-center space-x-2 border border-black rounded-lg w-fit p-2"
     >
-      <input type="text" class="outline-none w-full" placeholder="Search" />
-      <button>
+      <input name="search" type="text" class="outline-none w-full" placeholder="Search" />
+      <button type="submit">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -25,6 +26,9 @@
         </svg>
       </button>
     </div>
+    <div class="mt-2 flex justify-end">
+      <button type="submit" class="bg-black text-white px-2 py-1 rounded-md">Apply Filter</button>
+    </div>
     <div class="mt-5">
         <div class="text-gray-700 hover:cursor-pointer flex justify-between items-center" id="work_mode">
             <div>Work Mode</div>
@@ -34,15 +38,27 @@
         </div>
         <div class="space-y-1 mt-2 hidden" id="work_mode_content">
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'On-site' in workModes %}
+            <input checked  name="work_mode" value="On-site" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input   name="work_mode" value="On-site" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>On-site</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'Remote' in workModes %}
+            <input  checked name="work_mode" value="Remote" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input  name="work_mode" value="Remote" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>Remote</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'Hybrid' in workModes %}
+            <input checked name="work_mode" value="Hybrid" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input  name="work_mode" value="Hybrid" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>Hybrid</div>
           </div>
         </div>
@@ -56,31 +72,59 @@
     </div>
       <div class="space-y-1 mt-2 hidden" id="employement_type_content">
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Contract' in jobTypes %}
+          <input checked name="employement_type" value="Contract" type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input name="employement_type" value="Contract" type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Contract</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Full-time' in jobTypes %}
+          <input checked  name="employement_type" value="Full-time" type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input  name="employement_type" value="Full-time" type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Full-time</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Part-time' in jobTypes %}
+          <input checked name="employement_type" value="Part-time"  type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input name="employement_type" value="Part-time"  type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Part-time</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Internship' in jobTypes %}
+          <input checked name="employement_type" value="Internship"  type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input name="employement_type" value="Internship"  type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Internship</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Volunteer' in jobTypes %}
+          <input checked name="employement_type" value="Volunteer"  type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input name="employement_type" value="Volunteer"  type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Volunteer</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Temporary' in jobTypes %}
+          <input checked name="employement_type" value="Temporary"  type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input name="employement_type" value="Temporary"  type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Temporary</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Other' in jobTypes %}
+          <input checked name="employement_type" value="Other"  type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input name="employement_type" value="Other"  type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Other</div>
         </div>
       </div>
@@ -94,27 +138,51 @@
       </div>
       <div class="space-y-1 mt-2 hidden" id="experience_content">
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Entry Level' in experiences %}
+          <input checked name="experience" value="Entry Level" type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input  name="experience" value="Entry Level" type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Entry Level</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Junior Level' in experiences %}
+          <input checked name="experience" value="Junior Level" type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input name="experience" value="Junior Level" type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Junior Level</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Senior Level' in experiences %}
+          <input checked name="experience" value="Senior Level" type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input name="experience" value="Senior Level" type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Senior Level</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Managerial Level' in experiences %}
+          <input checked name="experience" value="Managerial Level" type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input name="experience" value="Managerial Level" type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Managerial Level</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Executive' in experiences %}
+          <input  checked ="experience" value="Executive" type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input name="experience" value="Executive" type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Executive</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" class="w-4 h-4" />
+          {% if 'Senior Executive' in experiences %}
+          <input checked name="experience" value="Senior Executive" type="checkbox" class="w-4 h-4" />
+          {% else %}
+          <input name="experience" value="Senior Executive" type="checkbox" class="w-4 h-4" />
+          {% endif %}
           <div>Senior Executive</div>
         </div>
       </div>
@@ -128,51 +196,99 @@
         </div>
         <div class="space-y-1 mt-2 hidden" id="sector_content">
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'Bank' in sectors %}
+            <input checked name="sector" value="Bank" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input name="sector" value="Bank" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>Bank</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'NGO' in sectors %}
+            <input checked name="sector" value="NGO" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input name="sector" value="NGO" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>NGO</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'Education' in sectors %}
+            <input checked name="sector" value="Education" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input name="sector" value="Education" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>Education</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'Hospitality' in sectors %}
+            <input checked name="sector" value="Hospitality" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input name="sector" value="Hospitality" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>Hospitality</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
-            <div>ICT</div>
+            {% if 'IT' in sectors %}
+            <input checked name="sector" value="IT" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input name="sector" value="IT" type="checkbox" class="w-4 h-4" />
+            {% endif %}
+            <div>IT</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'Engineering' in sectors %}
+            <input checked name="sector" value="Engineering" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input name="sector" value="Engineering" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>Engineering</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'Transportation' in sectors %}
+            <input checked name="sector" value="Transportation"  type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input name="sector" value="Transportation"  type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>Transportation</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'Legal-Service' in sectors %}
+            <input checked name="sector" value="Legal-Service" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input name="sector" value="Legal-Service" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>Legal Service</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'Health' in sectors %}
+            <input checked name="sector" value="Health" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input name="sector" value="Health" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>Health</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'Manufacturing' in sectors %}
+            <input checked name="sector" value="Manufacturing" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input name="sector" value="Manufacturing" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>Manufacturing</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'Creative-Art' in sectors %}
+            <input checked name="sector" value="Creative-Art" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input name="sector" value="Creative-Art" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>Creative Art</div>
           </div>
           <div class="flex items-center space-x-2">
-            <input type="checkbox" class="w-4 h-4" />
+            {% if 'Skill-Work' in sectors %}
+            <input checked name="sector" value="Skill-Work" type="checkbox" class="w-4 h-4" />
+            {% else %}
+            <input name="sector" value="Skill-Work" type="checkbox" class="w-4 h-4" />
+            {% endif %}
             <div>Skill Work</div>
           </div>
         </div>
@@ -186,99 +302,133 @@
       </div>
       <div class="space-y-1 mt-2 hidden" id="regions_content">
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="Addis-Ababa" class="w-4 h-4" />
+          {% if 'Addis-Ababa' in  regions %}
+          <input checked name="region" type="checkbox" value="Addis-Ababa" class="w-4 h-4" />
+          {% else %}
+          <input name="region" type="checkbox" value="Addis-Ababa" class="w-4 h-4" />
+          {% endif %}
           <div>Addis Ababa</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="Dre-Dawa" class="w-4 h-4" />
+          {% if 'Dre-Dawa' in  regions %}
+          <input checked name="region" type="checkbox" value="Dre-Dawa" class="w-4 h-4" />
+          {% else %}
+          <input name="region" type="checkbox" value="Dre-Dawa" class="w-4 h-4" />
+          {% endif %}
           <div>Dre Dawa</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="Afar" class="w-4 h-4" />
+          {% if 'Afar' in  regions %}
+          <input checked name="region" type="checkbox" value="Afar" class="w-4 h-4" />
+          {% else %}
+          <input name="region" type="checkbox" value="Afar" class="w-4 h-4" />
+          {% endif %}
           <div>Afar</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="Amhara" class="w-4 h-4" />
+          {% if 'Amhara' in  regions %}
+          <input checked  name="region"type="checkbox" value="Amhara" class="w-4 h-4" />
+          {% else %}
+          <input  name="region"type="checkbox" value="Amhara" class="w-4 h-4" />
+          {% endif %}
           <div>Amhara</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="Tigray" class="w-4 h-4" />
+          {% if 'Tigray' in  regions %}
+          <input checked name="region" type="checkbox" value="Tigray" class="w-4 h-4" />
+          {% else %}
+          <input name="region" type="checkbox" value="Tigray" class="w-4 h-4" />
+          {% endif %}
           <div>Tigray</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="Benishangul-Gumuz" class="w-4 h-4" />
+          {% if 'Benishangul-Gumuz' in  regions %}
+          <input checked name="region" type="checkbox" value="Benishangul-Gumuz" class="w-4 h-4" />
+          {% else %}
+          <input name="region" type="checkbox" value="Benishangul-Gumuz" class="w-4 h-4" />
+          {% endif %}
           <div>Benishangul Gumuz</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="Gambela" class="w-4 h-4" />
+          {% if 'Gambela' in  regions %}
+          <input checked name="region" type="checkbox" value="Gambela" class="w-4 h-4" />
+          {% else %}
+          <input name="region" type="checkbox" value="Gambela" class="w-4 h-4" />
+          {% endif %}
           <div>Gambela</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="Harari" class="w-4 h-4" />
+          {% if 'Harari' in  regions %}
+          <input checked name="region" type="checkbox" value="Harari" class="w-4 h-4" />
+          {% else %}
+          <input name="region" type="checkbox" value="Harari" class="w-4 h-4" />
+          {% endif %}
           <div>Harari</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="Oromia" class="w-4 h-4" />
+          {% if 'Oromia' in  regions %}
+          <input  checked name="region" type="checkbox" value="Oromia" class="w-4 h-4" />
+          {% else %}
+          <input  name="region" type="checkbox" value="Oromia" class="w-4 h-4" />
+          {% endif %}
           <div>Oromia</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="Sidama" class="w-4 h-4" />
+          {% if 'Sidama' in  regions %}
+          <input checked name="region" type="checkbox" value="Sidama" class="w-4 h-4" />
+          {% else %}
+          <input name="region" type="checkbox" value="Sidama" class="w-4 h-4" />
+          {% endif %}
           <div>Sidama</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="Somali" class="w-4 h-4" />
+          {% if 'Somali' in  regions %}
+          <input checked name="region" type="checkbox" value="Somali" class="w-4 h-4" />
+          {% else %}
+          <input name="region" type="checkbox" value="Somali" class="w-4 h-4" />
+          {% endif %}
           <div>Somali</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="SNNPR" class="w-4 h-4" />
+          {% if 'SNNPR' in  regions %}
+          <input checked name="region" type="checkbox" value="SNNPR" class="w-4 h-4" />
+          {% else %}
+          <input name="region" type="checkbox" value="SNNPR" class="w-4 h-4" />
+          {% endif %}
           <div>SNNPR</div>
         </div>
         <div class="flex items-center space-x-2">
-          <input type="checkbox" value="SWEP" class="w-4 h-4" />
+          {% if 'SWEP' in  regions %}
+          <input checked name="region" type="checkbox" value="SWEP" class="w-4 h-4" />
+          {% else %}
+          <input name="region" type="checkbox" value="SWEP" class="w-4 h-4" />
+          {% endif %}
           <div>SWEP</div>
         </div>
+        <div class="flex items-center space-x-2">
+          {% if 'Unspecified' in  regions %}
+          <input checked name="region" type="checkbox" value="Unspecified" class="w-4 h-4" />
+          {% else  %}
+          <input name="region" type="checkbox" value="Unspecified" class="w-4 h-4" />
+          {% endif %}
+          <div>Unspecified</div>
+        </div>
       </div>
-  </div>
-  </div>
+    </div>
+  
+  </form>
   <div class="col-span-9 ">
     <div class="grid grid-cols-3 gap-2">
-        {% include 'components/job.html' %}
-        {% include 'components/job.html' %} 
-        {% include 'components/job.html' %} 
-        {% include 'components/job.html' %}
-        {% include 'components/job.html' %}
+        {% for job in jobs %}
+          {% include 'components/job.html' %}
+        {% endfor %}
     </div>
-    <div class="flex mt-5 justify-center ">
-        <div class="grow"></div>
-        <div class="grow flex justify-between items-center">
-            <div class="flex space-x-2">
-                <button class="p-2 outline-none rounded-md  border-2 border-[#aaff00]">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#aaff00]">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-                    </svg>                      
-                </button>
-                <div class="flex items-center space-x-2  bg-[#aaff00] px-5 py-2 rounded-md">
-                    <div>Next page</div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-6 h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                      />
-                    </svg>
-                </div>
-            </div>
-         
-            <div>Page 1 of 5</div>
-        </div>
+    {% if total == 0%}
+    <div class="h-80 flex justify-center">
+      <img class="h-full object-cover" src="{% static 'images/empty.svg'%}" />
     </div>
+    {% endif %}
+    {% include 'common/pagination.html' with page_name="jobs" %}
   </div>
 </div>
 {% endblock %}

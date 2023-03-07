@@ -54,8 +54,8 @@
   </div>
   <div class="col-span-6">
     <h1 class="text-lg font-bold">{{company.name}}</h1>
-    <div class="text-sm text-gray-700 mt-2 text-justify">
-      {{company.description}}
+    <div class="text-sm text-gray-700 mt-2 text-justify line-clamp-3">
+      {{company.short_description | safe}}
     </div>
     <div class="flex justify-end w-full">
       <a

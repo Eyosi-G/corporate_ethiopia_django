@@ -1,24 +1,23 @@
 {% extends 'common/base.html' %}
 {% block head_title %}{{slug}}{% endblock %}
+{% load static %}
 {% block content %}
-    <div class="px-20">
-        <div class="grid grid-cols-12 gap-2 p-2 mt-5 rounded-lg">
+    <div class="px-20 py-5">
+        <div class="grid grid-cols-12 gap-2 p-2 rounded-lg">
             <div class="col-span-2 p-2 h-32">
               <img
                 class="w-full h-full object-cover"
-                src="https://cdn.hahu.jobs/public/aggregator/entityLogo/8344c114ce0e060fa68e5e3059b2ea5d8aca1842bd43ca9a9c0168d4cbcdbe08863e7418b661a607f262871bdce61b4f6214"
+                src="{{company.logo.url}}"
               />
             </div>
             <div class="col-span-10">
-              <h1 class="text-xl">Norwegian Refugee Council- NRC</h1>
+              <h1 class="text-xl">{{company.name}}</h1>
               <div class="text-gray-500 ">
-                NRC is focused on quality. In the field, we work hard to solve
-                challenges in demanding environments, often in hard-to-reach areas.
-                NRC is focused on quality. In the field, we work hard to solve
-                challenges in demanding environments, often in hard-to-reach areas.
+                {{ company.short_description|safe}}
               </div>
               <div class="flex space-x-2 mt-2">
-                <div
+                <a href="{{company.website}}">
+                  <div
                   class="flex space-x-3 items-center border border-black rounded-md w-fit py-1 pl-2 pr-2"
                 >
                   <svg
@@ -37,7 +36,9 @@
                   </svg>
                   <p>Website</p>
                 </div>
-                <div
+                </a>
+                <a href="mailto:{{company.email}}">
+                  <div
                   class="flex space-x-3 items-center border border-black rounded-md w-fit py-1 pl-2 pr-7"
                 >
                   <svg
@@ -56,6 +57,7 @@
                   </svg>
                   <p>Email</p>
                 </div>
+                </a>
               </div>
             </div>
         </div>
@@ -63,41 +65,16 @@
             <div class="col-span-9 ">
               <h1 class="text-xl">Open Positions</h1>
               <div class="grid grid-cols-3 gap-2 mt-2">
+                {% for job in jobs %}
                 {% include 'components/job.html' %}
-                {% include 'components/job.html' %}
-                {% include 'components/job.html' %}
+                {% endfor %}
               </div>
-              <div class="flex my-5 justify-center ">
-                <div class="grow"></div>
-                <div class="grow flex justify-between items-center">
-                    <div class="flex space-x-2">
-                        <button class="p-2 outline-none rounded-md  border-2 border-[#aaff00]">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#aaff00]">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-                            </svg>                      
-                        </button>
-                        <div class="flex items-center space-x-2  bg-[#aaff00] px-5 py-2 rounded-md">
-                            <div>Next page</div>
-                            <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-6 h-6"
-                            >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                            />
-                            </svg>
-                        </div>
-                    </div>
-                
-                    <div>Page 1 of 5</div>
+              {% if total == 0%}
+                <div class="h-80 flex justify-center">
+                  <img class="h-full object-cover" src="{% static 'images/empty.svg'%}" />
                 </div>
-            </div>
+              {% endif %}
+              {% include 'common/pagination.html' with page_name="jobs"%}
             </div>
             <div class="col-span-3">
               <h1 class="text-xl">Company Overview</h1>
@@ -121,7 +98,7 @@
                   </div>
                   <div>
                     <div class="text-bold">Website</div>
-                    <div class="text-sm text-gray-700">corporateethiopia.com</div>
+                    <div class="text-sm text-gray-700">{{company.website}}</div>
                   </div>
                 </div>
                 <div class="flex space-x-2 items-center">
@@ -143,7 +120,7 @@
                     </div>
                     <div>
                       <div class="text-bold">Email</div>
-                      <div class="text-sm text-gray-700">info@corporateethiopia.com</div>
+                      <div class="text-sm text-gray-700">{{company.email}}</div>
                     </div>
                   </div>
                 <div class="flex space-x-2 items-center">
@@ -154,7 +131,7 @@
                 </div>
                 <div>
                     <div class="text-bold">Address</div>
-                    <div class="text-sm text-gray-700">Tigray</div>
+                    <div class="text-sm text-gray-700">{{company.address}}</div>
                 </div>
                 </div>
               </div>
