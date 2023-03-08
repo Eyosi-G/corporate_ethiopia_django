@@ -27,7 +27,9 @@ element.addEventListener("click", () => {
   const elementContent = document.getElementById("menus");
   if (elementContent.classList.contains("hidden")) {
     elementContent.classList.remove("hidden");
+    elementContent.classList.add("flex");
   } else {
     elementContent.classList.add("hidden");
+    elementContent.classList.remove("flex");
   }
 });

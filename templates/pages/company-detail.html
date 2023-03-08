@@ -74,7 +74,9 @@
                   <img class="h-full object-cover" src="{% static 'images/empty.svg'%}" />
                 </div>
               {% endif %}
-              {% include 'common/pagination.html' with page_name="jobs"%}
+              {% with "companies/"|add:slug as page_name %}
+                {% include 'common/pagination.html' with page_name=page_name%}
+              {% endwith %}
             </div>
             <div class="md:col-span-3 col-span-full order-1 md:order-2">
               <h1 class="text-xl">Company Overview</h1>

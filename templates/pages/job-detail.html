@@ -3,7 +3,9 @@
 Monitoring And Evaluation Coordinator
 {% endblock %} 
 {% load static %}
+
 {% block content %}
+
 <div class="px-5 md:px-20 my-5">
   <h1 class="text-2xl text-center md:text-start md:text-4xl font-bold">{{job.title}}</h1>
   <div class="grid grid-cols-1  md:grid-cols-12 gap-2 p-2 mt-3 rounded-lg">
@@ -15,7 +17,7 @@ Monitoring And Evaluation Coordinator
     </div>
     <div class="col-span-10">
       <h1 class="text-xl">{{job.company.name}}</h1>
-      <div class="text-gray-500">
+      <div class="text-gray-500 ">
         {{ job.company.short_description | safe}}
       </div>
       <div class="flex space-x-2 mt-2">
@@ -67,13 +69,13 @@ Monitoring And Evaluation Coordinator
   <div class="grid grid-cols-1 md:grid-cols-12 mt-10 gap-4">
     <div class="md:col-span-9 col-span-full">
       <h1 class="text-xl">Job Description</h1>
-      <p class="mt-2 ">
+      <div class="mt-2 " id="job_description">
         {{job.description | safe}}
-      </p>
+      </div>
       <h1 class="text-xl mt-5">How to apply</h1>
-      <p class="mt-2 ">
-        {{job.how_to_apply}}
-      </p>
+      <div class="mt-2" id="how_to_apply">
+        {{job.how_to_apply | safe}}
+      </div>
     </div>
     <div class="md:col-span-3 col-span-full">
       <h1 class="text-xl">Job Overview</h1>

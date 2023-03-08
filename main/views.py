@@ -1,25 +1,76 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Company, Job
+from .models import Company, Job, ContactMessage, PageViews
 from django.http import HttpRequest
 from datetime import datetime, timedelta
-from django.http import HttpRequest
-from django.db.models import Q
-from operator import and_
-from functools import reduce
-
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from .forms import ContactForm
+from django.contrib import messages
+from django.core.mail import send_mail
 
 # Create your views here.
 
-def home(request):
+def incrementView(request):
+    url = request.path_info
     today = datetime.today() 
-    jobs = Job.objects.filter(created_at__range = [today,  today + timedelta(days=5)])[:4]
+    try:
+        pageView = PageViews.objects.get(created_at=today, page=url)
+        pageView.visit += 1
+        pageView.save()
+    except PageViews.DoesNotExist:
+        PageViews.objects.create(page=url, visit=1)
+
+def sendEmailBack(form):
+    firstName = form.cleaned_data["first_name"]
+    lastName = form.cleaned_data["last_name"]
+    email = form.cleaned_data["email"]
+    message = form.cleaned_data["message"]
+    ContactMessage.objects.create(
+        first_name = firstName,
+        last_name = lastName,
+        email = email,
+        message = message
+    )
+   
+
+def home(request:HttpRequest):
+    incrementView(request)
+    today = datetime.today() 
+    year = datetime.now().year
+    url = request.path_info
+    form = ContactForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            sendEmailBack(form)
+            messages.success(request, 'Thanks !! Your message is successfully submitted. We will contact you soon.')
+            return HttpResponseRedirect(url)
+
+
+    jobs = Job.objects.filter(created_at__range = [today - timedelta(days=5), today])[:4]
     context = {
         "isHomeActive": True,
-        "jobs": jobs
+        "jobs": jobs,
+        "form": form,
+        "url": url,
+        "year": year
     }
     return render(request, 'pages/home.html', context)
 
-def jobs(request:HttpRequest, page = 0):
+def jobs(request:HttpRequest ):
+    incrementView(request)
+    year = datetime.now().year
+    url = request.path_info
+    form = ContactForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            sendEmailBack(form)
+            messages.success(request, 'Thanks !! Your message is successfully submitted. We will contact you soon.')
+            return HttpResponseRedirect(url)
+    page = 0
+    if request.method == "GET" and request.GET.get("page"):
+        page = int(request.GET.get("page"))
+
     workModesOriginal =["On-site", "Remote", "Hybrid"]
     jobTypesOriginal = [
         'Contract', 
@@ -79,6 +130,8 @@ def jobs(request:HttpRequest, page = 0):
 
     startIndex = page * 10
     endIndex = startIndex + 10
+    print(startIndex)
+    print(endIndex)
     total = Job.objects.filter(
         job_type__in=jobTypes if len(jobTypes) > 0 else jobTypesOriginal,
         work_mode__in=workModes if len(workModes) > 0 else workModesOriginal,
@@ -115,23 +168,57 @@ def jobs(request:HttpRequest, page = 0):
         "jobTypes": jobTypes,
         "experiences": experiences,
         "sectors": sectors,
-        "regions": regions
+        "regions": regions,
+        "form": form,
+        "url": url,
+        "year": year
     }
 
     return render(request, 'pages/jobs.html', context)
 
 def job_detail(request, slug):
+    incrementView(request)
+    year = datetime.now().year
+    url = request.path_info
+    form = ContactForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            sendEmailBack(form)
+            messages.success(request, 'Thanks !! Your message is successfully submitted. We will contact you soon.')
+            return HttpResponseRedirect(url)
+
+
     job = get_object_or_404(Job, slug=slug) 
     relatedJobs = Job.objects.filter(sector = job.sector).exclude(slug = slug)[:4]
 
     context = {
         'slug': slug,
         "job": job,
-        "relatedJobs": relatedJobs
+        "relatedJobs": relatedJobs,
+        "form":form,
+        "url": url,
+        "year": year
     }
     return render(request, 'pages/job-detail.html', context)
 
-def companies(request:HttpRequest, page = 0):
+def companies(request:HttpRequest):
+    incrementView(request)
+    year = datetime.now().year
+    url = request.path_info
+    form = ContactForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            sendEmailBack(form)
+            messages.success(request, 'Thanks !! Your message is successfully submitted. We will contact you soon.')
+            return HttpResponseRedirect(url)
+ 
+    page = 0
+    if request.method == "GET" and request.GET.get("page"):
+        page = int(request.GET.get("page"))
+
+
     startIndex = page * 10
     endIndex = startIndex + 10
     total = Company.objects.count()
@@ -151,11 +238,29 @@ def companies(request:HttpRequest, page = 0):
         "numOfPages": numOfPages,
         "nextPage": nextPage,
         "prevPage": prevPage,
-        "total": total
+        "total": total,
+        "form": form,
+        "url": url,
+        "year": year
     }
     return render(request, 'pages/companies.html', context)
 
-def company_detail(request, slug, page = 0 ):
+def company_detail(request, slug):
+    incrementView(request)
+    year = datetime.now().year
+    url = request.path_info
+    form = ContactForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            sendEmailBack(form)
+            messages.success(request, 'Thanks !! Your message is successfully submitted. We will contact you soon.')
+            return HttpResponseRedirect(url)
+    page = 0
+    if request.method == "GET" and request.GET.get("page"):
+        page = int(request.GET.get("page"))
+
+
     company = get_object_or_404(Company, slug=slug) 
     jobs = company.job_set.all()
     startIndex = page * 10
@@ -178,7 +283,10 @@ def company_detail(request, slug, page = 0 ):
         "numOfPages": numOfPages,
         "nextPage": nextPage,
         "prevPage": prevPage,
-        "total": total
+        "total": total,
+        "form": form,
+        "url": url,
+        "year": year
     }
 
     return render(request, 'pages/company-detail.html', context)

@@ -17,7 +17,7 @@
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6 shrink-0"
+            class="w-4 h-4 md:w-6 md:h-6"
           >
             <path
               stroke-linecap="round"
@@ -26,25 +26,27 @@
             />
           </svg>
         </div>
-        <div>{{company.address}}</div>
+        <div class="text-sm md:text-base">{{company.address}}</div>
       </div>
       {% if company.website %}
-      <div class="flex items-center space-x-2">
+      <div class="flex items-center space-x-2 mt-1">
+       <dib>
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-          />
-        </svg>
-        <div>{{company.website}}</div>
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-4 h-4 md:w-6 md:h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+        />
+      </svg>
+       </dib>
+        <div class="text-sm md:text-base">{{company.website}}</div>
       </div>
       {% endif %}
     </div>
@@ -53,8 +55,8 @@
     <div class="h-[80%] border-r border-black"></div>
   </div>
   <div class="col-span-6">
-    <h1 class="text-lg font-bold">{{company.name}}</h1>
-    <div class="text-sm text-gray-700 mt-2 text-justify line-clamp-3">
+    <h1 class="text-lg font-bold h-14 flex items-center">{{company.name}}</h1>
+    <div class="text-xs md:text-base text-gray-700  text-justify line-clamp-3">
       {{company.short_description | safe}}
     </div>
     <div class="flex justify-end w-full">

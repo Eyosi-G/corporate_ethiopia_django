@@ -1,4 +1,4 @@
-<div class="rounded-md p-4 border border-black h-fit">
+<div class="rounded-md p-4 border border-black  flex flex-col">
   <div class="flex justify-between items-center">
     <img
       class="w-14 h-14 rounded-full object-cover"
@@ -10,7 +10,13 @@
     </div>
     {% endif %}
   </div>
-  <h1 class="text-lg font-bold mt-2">{{job.title}}</h1>
+  <div class="flex space-x-2 ">
+    <h1 class="text-lg font-bold mt-2 line-clamp-1">{{job.title}}</h1>
+    {% if job.hasExpired %}
+    <span class="text-xs text-red-800">Expired</span>
+    {% endif %}
+
+  </div>
   <div class="flex items-center space-x-2 mt-3">
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +75,7 @@
     </div>
     <div class="px-2 py-1 rounded-lg border border-black">{{job.sector}}</div>
   </div>
-  <div class="text-sm text-gray-700 mt-5 text-justify line-clamp-3">
+  <div class="text-sm text-gray-700 mt-5 text-justify line-clamp-3 grow">
     {{job.description | safe }}
   </div>
   <a href="/jobs/{{job.slug}}" >
