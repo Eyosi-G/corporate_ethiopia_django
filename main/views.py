@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Company, Job, ContactMessage, PageViews
+from .models import Company, Job, ContactMessage, PageViews,Sector
 from django.http import HttpRequest
 from datetime import datetime, timedelta
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
@@ -90,21 +90,7 @@ def jobs(request:HttpRequest ):
         'Executive',
         'Senior Executive'
     ]
-    sectorsOriginal  = [
-        'Bank', 
-        'NGO',
-        'Finance', 
-        'Education', 
-        'Hospotality', 
-        'IT',
-        'Engineering', 
-        'Transportation', 
-        'Legal-Service' 
-        'Health', 
-        'Manufacturing', 
-        'Creative-Art',
-        'Skill-Work Work'
-    ]
+   
     regionsOriginal = [
         'Addis-Ababa', 
         'Dre-Dawa', 
@@ -130,24 +116,24 @@ def jobs(request:HttpRequest ):
 
     startIndex = page * 10
     endIndex = startIndex + 10
-    print(startIndex)
-    print(endIndex)
+    allSectors = Sector.objects.all()
+    filterSectors = Sector.objects.filter(name__in=sectors)
     total = Job.objects.filter(
         job_type__in=jobTypes if len(jobTypes) > 0 else jobTypesOriginal,
         work_mode__in=workModes if len(workModes) > 0 else workModesOriginal,
         experience__in=experiences if len(experiences) > 0 else experiencesOriginal,
-        sector__in=sectors if len(sectors) > 0 else sectorsOriginal,
+        sectors__in=filterSectors if len(filterSectors) > 0 else allSectors,
         region__in=regions if len(regions) > 0 else regionsOriginal,
         title__icontains = searchQuery if searchQuery else ""
-    ).count()
+    ).distinct().count()
     jobs = Job.objects.all().filter(
         job_type__in=jobTypes if len(jobTypes) > 0 else jobTypesOriginal,
         work_mode__in=workModes if len(workModes) > 0 else workModesOriginal,
         experience__in=experiences if len(experiences) > 0 else experiencesOriginal,
-        sector__in=sectors if len(sectors) > 0 else sectorsOriginal,
+        sectors__in=filterSectors if len(filterSectors) > 0 else allSectors,
         region__in=regions if len(regions) > 0 else regionsOriginal,
         title__icontains = searchQuery if searchQuery else ""
-    )[startIndex:endIndex]
+    ).distinct()[startIndex:endIndex]
     numOfPages = int(total / 10)
     nextPage = page
     prevPage = page
@@ -190,7 +176,7 @@ def job_detail(request, slug):
 
 
     job = get_object_or_404(Job, slug=slug) 
-    relatedJobs = Job.objects.filter(sector = job.sector).exclude(slug = slug)[:4]
+    relatedJobs = Job.objects.filter(sectors__in = [sector.id for sector in job.sectors.all()]).distinct().exclude(slug = slug)[:4]
 
     context = {
         'slug': slug,

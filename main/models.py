@@ -5,13 +5,29 @@ from datetime import datetime, timedelta
 
 # Create your models here.
 class Sector(models.Model):
-    name = models.CharField(max_length=100)
+
+    sectors = [
+        ('Bank', 'Bank'),
+        ('NGO', 'NGO'),
+        ('Finance', 'Finance'),
+        ('Education', 'Education'),
+        ('Hospitality', 'Hospitality'),
+        ('IT', 'IT'),
+        ('Engineering', 'Engineering'),
+        ('Transportation', 'Transportation'),
+        ('Legal-Service', 'Legal Service'),
+        ('Health', 'Health'),
+        ('Manufacturing', 'Manufacturing'),
+        ('Creative-Art', 'Creative Art'),
+        ('Skill-Work','Skill Work'),
+    ]
+    name = models.CharField(max_length=20, choices=sectors, unique=True)
 
     def __str__(self):
         return self.name
     
     class Meta:
-        verbose_name_plural = 'Categories'
+        verbose_name_plural = 'Sectors'
 
 
     
@@ -95,24 +111,12 @@ class Job(models.Model):
         ('Unspecified','Unspecified'),
     ]
 
-    sectors = [
-        ('Bank', 'Bank'),
-        ('NGO', 'NGO'),
-        ('Finance', 'Finance'),
-        ('Education', 'Education'),
-        ('Hospotality', 'Hospotality'),
-        ('IT', 'IT'),
-        ('Engineering', 'Engineering'),
-        ('Transportation', 'Transportation'),
-        ('Legal-Service', 'Legal Service'),
-        ('Health', 'Health'),
-        ('Manufacturing', 'Manufacturing'),
-        ('Creative-Art', 'Creative Art'),
-        ('Skill-Work','Skill Work'),
-    ]
+    
 
     title = models.CharField(max_length=100)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    sectors  = models.ManyToManyField(Sector)
+
     description = RichTextField()
     created_at = models.DateField(auto_now_add=True)
     slug = models.SlugField(unique=True, max_length=300)
@@ -131,11 +135,7 @@ class Job(models.Model):
         max_length=20,
         verbose_name='Work Mode'
     )    
-    sector  = models.CharField(
-        max_length=20,
-        choices=sectors
-    )
-
+ 
     region = models.CharField(
         max_length=20,
         choices=regions
@@ -159,9 +159,11 @@ class Job(models.Model):
     def isNew(self):
         createdAt = datetime(self.created_at.year, self.created_at.month, self.created_at.day)
         return createdAt > datetime.today() - timedelta(days=5)
-    def hasExpired(self):
+    def has_expired(self):
         deadline = datetime(self.deadline.year, self.deadline.month, self.deadline.day)
         return datetime.today() > deadline
+    def assigned_sectors(self):
+        return ', '.join([sector.name for sector in self.sectors.all()])
 
 
 class ContactMessage(models.Model):

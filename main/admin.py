@@ -7,13 +7,13 @@ class CompanyAdmin(admin.ModelAdmin):
     exclude = ['slug']
 
 class JobAdmin(admin.ModelAdmin):
-    list_display = [ 'title', 'company', 'sector', 'hasExpired' ]
-    list_filter = ['sector']
+    list_display = [ 'title', 'company', 'has_expired','assigned_sectors' ]
     exclude = ['slug']
+    list_filter = ['sectors']
+
 
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = [ 'first_name', 'last_name', 'email', 'created_at' ]
-
     def has_add_permission(self, request, obj=None):
         return False
 
@@ -24,6 +24,7 @@ class PageViewsAdmin(admin.ModelAdmin):
     
 admin.site.site_header = 'Corporate Ethiopia'
 
+admin.site.register(models.Sector)
 admin.site.register(models.Company, CompanyAdmin)
 admin.site.register(models.Job, JobAdmin)
 admin.site.register(models.ContactMessage, ContactMessageAdmin)
