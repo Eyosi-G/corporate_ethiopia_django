@@ -84,7 +84,6 @@ def jobs(request:HttpRequest ):
     experiencesOriginal = [
         'Entry Level',
         'Junior Level',
-        'Mid Level',
         'Senior Level', 
         'Managerial Level', 
         'Executive',

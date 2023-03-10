@@ -8,7 +8,7 @@
         src="{{company.logo.url}}"
       />
     </div>
-    <div>
+    <div class="mt-2">
       <div class="flex items-center space-x-2">
         <div>
           <svg
@@ -46,7 +46,7 @@
         />
       </svg>
        </dib>
-        <div class="text-sm md:text-base">{{company.website}}</div>
+        <div class="text-sm md:text-base break-all">{{company.website}}</div>
       </div>
       {% endif %}
     </div>
@@ -55,8 +55,8 @@
     <div class="h-[80%] border-r border-black"></div>
   </div>
   <div class="col-span-6">
-    <h1 class="text-lg font-bold h-14 flex items-center">{{company.name}}</h1>
-    <div class="text-xs md:text-base text-gray-700  text-justify line-clamp-3">
+    <h1 class="text-lg font-bold h-14 flex items-center line-clamp-2">{{company.name}}</h1>
+    <div class="text-xs md:text-base text-gray-700  text-justify line-clamp-3 mt-2">
       {{company.short_description | safe}}
     </div>
     <div class="flex justify-end w-full">

@@ -73,7 +73,6 @@ class Job(models.Model):
     experiences = [
         ('Entry Level', 'Entry Level'),
         ('Junior Level', 'Junior Level'),
-        ('Mid Level', 'Mid Level'),
         ('Senior Level', 'Senior Level'),
         ('Managerial Level', 'Managerial Level'),
         ('Executive', 'Executive'),
@@ -116,13 +115,12 @@ class Job(models.Model):
     title = models.CharField(max_length=100)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     sectors  = models.ManyToManyField(Sector)
-
     description = RichTextField()
     created_at = models.DateField(auto_now_add=True)
     slug = models.SlugField(unique=True, max_length=300)
     experience = models.CharField(
         choices=experiences,
-          max_length=20,
+        max_length=20,
          verbose_name='Experience'
     )
     job_type = models.CharField(
