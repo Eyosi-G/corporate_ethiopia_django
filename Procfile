@@ -1,1 +1,2 @@
-web: gunicorn corporate_ethiopia.wsgi --log-file - 
+web: gunicorn corporate_ethiopia.wsgi
+
