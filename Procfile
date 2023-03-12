@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn corporate_ethiopia.wsgi
+web: gunicorn corporate_ethiopia.wsgi
