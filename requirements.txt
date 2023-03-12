@@ -1,5 +1,6 @@
 asgiref==3.6.0
 backports.zoneinfo==0.2.1
+dj-database-url==1.2.0
 Django==4.1.7
 django-ckeditor==6.5.1
 django-environ==0.10.0
