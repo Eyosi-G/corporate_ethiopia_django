@@ -2,7 +2,7 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
 from datetime import datetime, timedelta
-
+import uuid
 # Create your models here.
 class Sector(models.Model):
 
@@ -33,7 +33,7 @@ class Sector(models.Model):
     
 class Company(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, max_length=300)
+    slug = models.SlugField(unique=True, max_length=500)
     address = models.CharField(
         max_length=200
     )
@@ -53,7 +53,8 @@ class Company(models.Model):
     )
     logo = models.ImageField(
         upload_to='images/',
-        default="images/default.jpg"
+        default="images/default.jpg",
+        
     )
 
     def __str__(self):
@@ -117,7 +118,7 @@ class Job(models.Model):
     sectors  = models.ManyToManyField(Sector)
     description = RichTextField()
     created_at = models.DateField(auto_now_add=True)
-    slug = models.SlugField(unique=True, max_length=300)
+    slug = models.SlugField(unique=True, max_length=500)
     experience = models.CharField(
         choices=experiences,
         max_length=20,
