@@ -26,7 +26,7 @@ environ.Env.read_env()
 SECRET_KEY = 'django-insecure-(jlko6$dir$ix6++rnbz255ly4so4ps@d*et=q%z*!#4o_s8%*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '*'
@@ -131,7 +131,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'assets'
 MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # Default primary key field type
