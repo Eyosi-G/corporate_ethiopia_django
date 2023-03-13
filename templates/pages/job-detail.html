@@ -9,7 +9,7 @@ Monitoring And Evaluation Coordinator
 <div class="px-5 md:px-20 my-5">
   <h1 class="text-2xl text-center md:text-start md:text-4xl font-bold">{{job.title}}</h1>
   <div class="grid grid-cols-1  md:grid-cols-12 gap-2 p-2 mt-3 rounded-lg">
-    <a href="{% url 'companies' job.company.slug %}">
+    <a href="{% url 'company_detail' job.company.slug %}">
     <div class="md:col-span-2 col-span-full p-2 h-32">
       <img
         class="w-full h-full object-cover"
